@@ -1,0 +1,14 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: rust-wasm-service
+  namespace: default
+spec:
+  template:
+    spec:
+      runtimeClassName: wasmedge
+      containers:
+        - name: rust-wasm-service
+          image: ghcr.io/tscng/wasmedge-rust-knative-demo
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,18 @@
+[package]
+name = "wasmedge-rust-knative-plugin-demo"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "wasmedge-rust-knative-plugin-demo"
+path = "src/main.rs"
+
+[patch.crates-io]
+tokio = { git = "https://github.com/second-state/wasi_tokio.git", branch = "v1.36.x" }
+socket2 = { git = "https://github.com/second-state/socket2.git", branch = "v0.5.x" }
+hyper = { git = "https://github.com/second-state/wasi_hyper.git", branch = "v0.14.x" }
+
+[dependencies]
+wasmedge_process_interface = "^0.2.1"
+axum = "0.6"
+tokio = { version = "1", features = ["rt", "macros", "net", "time", "io-util"]}

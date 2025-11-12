@@ -1,0 +1,44 @@
+name: Release Wasm Binary
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set short git commit SHA
+        run: |
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
+          echo "COMMIT_SHORT_SHA=$calculatedSha" >> $GITHUB_ENV
+
+      - name: Install Rust target for wasm
+        run: |
+          rustup target add wasm32-wasip1
+
+      - name: Build Wasm files
+        run: RUSTFLAGS="--cfg wasmedge --cfg tokio_unstable" cargo build --target wasm32-wasip1 --release
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.COMMIT_SHORT_SHA }}
+          release_name: rust-wasm-build
+          draft: false
+          prerelease: false
+      - uses: xresloader/upload-to-github-release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "target/wasm32-wasip1/release/*.wasm;service.yml"
+          release_id: ${{ steps.create_release.outputs.id }}
+          overwrite: true
+          verbose: true
