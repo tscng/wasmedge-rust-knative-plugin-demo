@@ -14,6 +14,7 @@ This setup uses Ubuntu 22.04 in WSL. Check required dependencies/commands with t
 This enables potential modification of the plugin source code as used later.
 - Clone: `git clone https://github.com/WasmEdge/WasmEdge.git && cd WasmEdge && mkdir build`
 - Dependencies: `sudo apt install -y software-properties-common cmake llvm-14-dev liblld-14-dev gcc g++`
+- (Optional: Modify the plugin sources. Eg: Remove check for allow-command flag in process plugin.)
 - Configure - select plugins to be used: `cmake -GNinja -Bbuild -DCMAKE_BUILD_TYPE=Release -DWASMEDGE_PLUGIN_PROCESS=On`
 - Build: `cmake --build build`
 - Install for all users: `sudo cmake --install build`
