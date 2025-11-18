@@ -1,0 +1,52 @@
+[plugins."io.containerd.grpc.v1.cri".containerd]
+default_runtime_name = "crun"
+disable_snapshot_annotations = true
+discard_unpacked_layers = false
+no_pivot = false
+snapshotter = "overlayfs"
+
+[plugins."io.containerd.grpc.v1.cri".containerd.default_runtime]
+base_runtime_spec = ""
+container_annotations = []
+pod_annotations = []
+privileged_without_host_devices = false
+runtime_engine = ""
+runtime_root = ""
+runtime_type = ""
+
+[plugins."io.containerd.grpc.v1.cri".containerd.default_runtime.options]
+
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.crun]
+base_runtime_spec = ""
+container_annotations = []
+pod_annotations = ["*.wasm.*", "wasm.*", "module.wasm.image/*", "*.module.wasm.image", "module.wasm.image/variant.*"]
+privileged_without_host_devices = false
+runtime_engine = ""
+runtime_root = ""
+runtime_type = "io.containerd.runc.v2"
+
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.crun.options]
+BinaryName = "crun"
+CriuImagePath = ""
+CriuPath = ""
+CriuWorkPath = ""
+IoGid = 0
+IoUid = 0
+NoNewKeyring = false
+NoPivotRoot = false
+Root = ""
+ShimCgroup = ""
+SystemdCgroup = false
+
+[plugins."io.containerd.grpc.v1.cri".containerd.untrusted_workload_runtime]
+base_runtime_spec = ""
+container_annotations = []
+pod_annotations = []
+privileged_without_host_devices = false
+runtime_engine = ""
+runtime_root = ""
+runtime_type = ""
+
+[plugins."io.containerd.grpc.v1.cri".containerd.untrusted_workload_runtime.options]

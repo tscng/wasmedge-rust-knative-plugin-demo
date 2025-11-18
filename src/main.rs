@@ -29,6 +29,6 @@ async fn probe() -> &'static str {
 
 // return ls command output
 async fn service() -> String {
-    let cmd = Command::new("ls").timeout(1000).output();
+    let cmd = Command::new("echo hello from service").timeout(1000).output();
     format!("$ ls\n{}",str::from_utf8(&cmd.stdout).expect("GET STDOUT ERR"))
 }

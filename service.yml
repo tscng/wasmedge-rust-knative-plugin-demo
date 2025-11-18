@@ -5,10 +5,23 @@ metadata:
   namespace: default
 spec:
   template:
+    metadata:
+      annotations:
+        module.wasm.image/variant: compat-smart
     spec:
-      runtimeClassName: wasmedge
       containers:
         - name: rust-wasm-service
-          image: ghcr.io/tscng/wasmedge-rust-knative-demo
+          image: ghcr.io/tscng/wasmedge-rust-knative-plugin-demo
           ports:
             - containerPort: 8080
+          env:
+            - name: WASMEDGE_PLUGIN_PATH
+              value: "/plugin"
+          volumeMounts:
+            - name: plugin-volume
+              mountPath: /plugin
+
+      volumes:
+        - name: plugin-volume
+          configMap:
+            name: wasmedge-plugins
